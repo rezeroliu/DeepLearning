@@ -176,11 +176,11 @@ if __name__ == '__main__':
     test_x, test_labels = load_data('mnist', 't10k')  # 测试集样本和标签
     # print(np.where(training_x != 0))
     # 将[0,255]区间内的像素值归一化到[0,1]
-    training_x = training_x[:, : 2000] / 255
-    test_x = test_x[:, : 500] / 255
+    training_x = training_x / 255
+    test_x = test_x / 255
     # 将标签值转化为向量
-    training_y = label2vec(training_labels[:2000])
-    test_y = label2vec(test_labels[:500])
+    training_y = label2vec(training_labels)
+    test_y = label2vec(test_labels)
     n_x = training_x.shape[0]  # 输入层神经元个数
     n_y = test_y.shape[0]      # 输出层神经元个数
     # print(training_x.shape)
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
     # 构建并训练网络
     learning_rate = 0.05  # 学习率
-    iteration = 1500     # 最大训练代数
+    iteration = 1000     # 最大训练代数
     layer_dims = [n_x, 200, 100, 50, n_y]  # 构建深层神经网络，输入输出层神经元数量由样本决定
 
     # 训练分类器
@@ -198,10 +198,10 @@ if __name__ == '__main__':
 
     # 在训练集上测试准确率
     training_prediction = predict(training_x, classifier)
-    accuracy_rate1 = get_accuracy_rate(training_labels[:2000], training_prediction)
+    accuracy_rate1 = get_accuracy_rate(training_labels, training_prediction)
     print("Accuracy on training set is %s." % accuracy_rate1)
 
     # 在测试集上测试准确率
     test_prediction = predict(test_x, classifier)
-    accuracy_rate2 = get_accuracy_rate(test_labels[:500], test_prediction)
+    accuracy_rate2 = get_accuracy_rate(test_labels, test_prediction)
     print("Accuracy on test set is %s." % accuracy_rate2)
